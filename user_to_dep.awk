@@ -1,6 +1,7 @@
 #! /bin/sh
+# this code is help &  contributed by Paul Pendent
 
-S_BASE="ou=people,o=cadence.com"
+S_BASE="ou=people,o=xyz.com"
 
 AWK_LDAP='''
 BEGIN {
@@ -15,6 +16,6 @@ BEGIN {
 }
 NR == 1 { print hSep; printf (fmt, "        Name", "Department"); print hSep; }
 $1 == "dn" && $2 == "uid" { Uid = $3; next; }
-$1 == "cdsBusinessUnit" { sub (reClip, ""); printf (fmt, Uid, $0); } END { print hSep; }
+$1 == "kdsBusinessUnit" { sub (reClip, ""); printf (fmt, Uid, $0); } END { print hSep; }
 '''
-ldapsearch -h its3 -x -LLL -b "${S_BASE}" uid="*" cdsBusinessUnit | awk "${AWK_LDAP}"
+ldapsearch -h its3 -x -LLL -b "${S_BASE}" uid="*" kdsBusinessUnit | awk "${AWK_LDAP}"
