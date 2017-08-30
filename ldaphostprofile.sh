@@ -11,11 +11,11 @@
 
 set -f      # to prevent filename expansion
 
-mapfile -t PLIST < <(ldapsearch -h its3 -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/preferredServerList/ { print $2,$3,$4 }')
+mapfile -t PLIST < <(ldapsearch -h myldap -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/preferredServerList/ { print $2,$3,$4 }')
 
-mapfile -t DLIST < <(ldapsearch -h its3 -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/defaultServerList/ { print $2,$3,$4 }')
+mapfile -t DLIST < <(ldapsearch -h myldap -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/defaultServerList/ { print $2,$3,$4 }')
 
-mapfile -t LLIST < <(ldapsearch -h its3 -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/dn/ {print $2}'| cut -d "," -f1 | cut -d"=" -f2)
+mapfile -t LLIST < <(ldapsearch -h myldap -x -LLL -b "ou=profile,o=example.com" "cn=*" | awk '/^dn/ {s =1; dn=$0} /^preferredServerList/ {s*=2; ps=$0}/^defaultServerList/ {s*=3; ds=$0} s && !(s%6) {print sep dn ORS ps ORS ds; sep=ORS; s=0}' | awk '/dn/ {print $2}'| cut -d "," -f1 | cut -d"=" -f2)
 
 count_x=${#PLIST[@]}
 count_y=${#DLIST[@]}
