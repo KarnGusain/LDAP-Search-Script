@@ -18,4 +18,4 @@ NR == 1 { print hSep; printf (fmt, "        Name", "Department"); print hSep; }
 $1 == "dn" && $2 == "uid" { Uid = $3; next; }
 $1 == "kdsBusinessUnit" { sub (reClip, ""); printf (fmt, Uid, $0); } END { print hSep; }
 '''
-ldapsearch -h its3 -x -LLL -b "${S_BASE}" uid="*" kdsBusinessUnit | awk "${AWK_LDAP}"
+ldapsearch -h ldapserver1 -x -LLL -b "${S_BASE}" uid="*" kdsBusinessUnit | awk "${AWK_LDAP}"
