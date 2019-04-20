@@ -1,5 +1,5 @@
 #! /bin/sh
-# this code is help &  contributed by Paul Pendent
+# this code is helped & contributed by Paul Pendent
 
 S_BASE="ou=people,o=xyz.com"
 
